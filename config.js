@@ -5,3 +5,6 @@ exports.DB_USER = 'katiewest820';
 exports.DB_PASSWORD = 'password';
 exports.DB_DATABASE = 'runningdb';
 
+
+exports.JWT_SECRET = process.env.JWT_SECRET || 'izzy west';
+
