@@ -8,3 +8,5 @@ exports.DB_DATABASE = 'runningdb';
 
 exports.JWT_SECRET = process.env.JWT_SECRET || 'izzy west';
 
+exports.CLIENT_ORIGIN = 'http://localhost:3000';
+

@@ -4,7 +4,7 @@ const mysql = require('mysql');
 
 exports.newRun = (req, res) => {
   console.log(req.body)
-  db.query('INSERT INTO runningTable (name, date, goal, userid) VALUES (?, ?, ?, ?)', [req.body.name, req.body.date, req.body.goal, req.body.userid], (err, result) => {
+  db.query('INSERT INTO runningTable (name, date, goal, userid, pinned) VALUES (?, ?, ?, ?, ?)', [req.body.name, req.body.date, req.body.goal, req.body.userid, req.body.pinned], (err, result) => {
     if(err)
       throw err;
     res.status(200).json({
@@ -49,7 +49,7 @@ exports.deleteOne = (req, res) => {
 
 exports.editOneRun = (req, res) => {
   console.log(req.body)
-  db.query(`UPDATE runningTable SET goal = '${req.body.goal}', name = '${req.body.name}', date = '${req.body.date}' WHERE idrunningTable = ${req.params.id}`, (err, result) => {
+  db.query(`UPDATE runningTable SET goal = '${req.body.goal}', name = '${req.body.name}', date = '${req.body.date}', pinned = '${req.body.pinned}' WHERE idrunningTable = ${req.params.id}`, (err, result) => {
     if(err)
       throw err;
     res.status(200).json({

@@ -1,16 +1,18 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const {PORT} = require('./config');
+const {PORT, CLIENT_ORIGIN} = require('./config');
 const userRoutes = require('./routes/userRoutes');
 const runRoutes = require('./routes/runRoutes');
 const logRoutes = require('./routes/logRoutes');
 const db = require('./database');
+const cors = require('cors');
 
 const app = express();
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(cors({origin: CLIENT_ORIGIN}));
 
 app.all('/');
 app.use('/user', userRoutes);
