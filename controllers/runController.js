@@ -4,18 +4,29 @@ const mysql = require('mysql');
 
 exports.newRun = (req, res) => {
   console.log(req.body)
-  db.query('INSERT INTO runningTable (name, date, goal, userid, pinned) VALUES (?, ?, ?, ?, ?)', [req.body.name, req.body.date, req.body.goal, req.body.userid, req.body.pinned], (err, result) => {
+  db.query('INSERT INTO runningTable (location, date, mileage, userid, incline, terrain, weather, rating, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [req.body.location,
+      req.body.date,
+      req.body.mileage,
+      req.body.userid,
+      req.body.incline,
+      req.body.terrain,
+      req.body.weather,
+      req.body.rating,
+      req.body.notes],
+    (err, result) => {
     if(err)
       throw err;
     res.status(200).json({
-      message: 'User added to database',
+      message: 'run added to database',
       data: result
     });
   });
 };
 
 exports.getAllRuns = (req, res) => {
-  db.query('SELECT * from runningTable', (err, result) => {
+  console.log(req.params.userid)
+  db.query(`SELECT * from runningTable WHERE userid = ${req.params.userid}`, (err, result) => {
     if(err)
       throw err;
     res.status(200).json({
@@ -26,7 +37,7 @@ exports.getAllRuns = (req, res) => {
 };
 
 exports.getOneRun = (req, res) => {
-  db.query(`SELECT * from runningTable WHERE idrunningTable = ${req.params.id}`, (err, result) => {
+  db.query(`SELECT * from runningTable WHERE id = ${req.params.id}`, (err, result) => {
     if(err)
       throw err;
     res.status(200).json({
@@ -37,7 +48,7 @@ exports.getOneRun = (req, res) => {
 };
 
 exports.deleteOne = (req, res) => {
-  db.query(`DELETE from runningTable WHERE idrunningTable = ${req.params.id}`, (err, result) => {
+  db.query(`DELETE from runningTable WHERE id = ${req.params.id}`, (err, result) => {
     if(err)
       throw err;
     res.status(200).json({
@@ -49,7 +60,15 @@ exports.deleteOne = (req, res) => {
 
 exports.editOneRun = (req, res) => {
   console.log(req.body)
-  db.query(`UPDATE runningTable SET goal = '${req.body.goal}', name = '${req.body.name}', date = '${req.body.date}', pinned = '${req.body.pinned}' WHERE idrunningTable = ${req.params.id}`, (err, result) => {
+  db.query(`UPDATE runningTable SET 
+  location = '${req.body.location}', 
+  mileage = '${req.body.mileage}', 
+  date = '${req.body.date}', 
+  terrain = '${req.body.terrain}',
+  weather = '${req.body.weather}',
+  incline = '${req.body.incline}',
+  rating = '${req.body.rating}',
+  notes = '${req.body.notes}' WHERE id = ${req.params.id}`, (err, result) => {
     if(err)
       throw err;
     res.status(200).json({

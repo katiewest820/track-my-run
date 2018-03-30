@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const {PORT, CLIENT_ORIGIN} = require('./config');
 const userRoutes = require('./routes/userRoutes');
 const runRoutes = require('./routes/runRoutes');
-const logRoutes = require('./routes/logRoutes');
 const db = require('./database');
 const cors = require('cors');
 
@@ -17,7 +16,6 @@ app.use(cors({origin: CLIENT_ORIGIN}));
 app.all('/');
 app.use('/user', userRoutes);
 app.use('/run', runRoutes);
-//app.use('/log', logRoutes);
 
 let server;
 
